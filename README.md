@@ -2,7 +2,8 @@
 # Identifying preferred routes of sharing information on social networks
 
 *The pre-print manuscript of this work is freely published on the personal repository of the firs author according to the [ethics and policies](https://royalsociety.org/journals/ethics-policies/media-embargo/) of the Royal Sociaety Open Science to which it was submitted.*
-[📄 Get the pre-print manuscript](https://github.com/rozhinmkian/code-for-social-preferred-routes-2025/blob/main/Identifying_preferred_routes_of_sharing_information_on_social_networks%20(4).pdf)
+
+[📄 Get the pre-print manuscript](https://github.com/rozhinmkian/code-for-social-preferred-routes-2025/blob/main/Identifying_preferred_routes_of_sharing_information_on_social_networks.pdf)
 
 
 **Abstract**
