@@ -3,6 +3,8 @@ import os
 from tqdm import tqdm
 import networkx as nx
 import warnings
+import itertools
+import random
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 # Global Simulations
@@ -21,6 +23,17 @@ def path_graph_initialization(N,m0):
   return init_adj_matrix
 
 
+def random_unique_links(N, m0):
+    # All possible unique undirected links (i < j)
+    all_links = list(itertools.combinations(range(N), 2))
+    
+    if m0 > len(all_links):
+        raise ValueError("m0 exceeds total possible unique links.")
+    
+    selected_links = random.sample(all_links, m0)
+    
+    return selected_links
+
 def create_global_adjacency_matrix(N, init_type="path", m0=5): #checked it,
     """
     Create a symmetric weighted adjacency matrix for an undirected network.
@@ -37,8 +50,8 @@ def create_global_adjacency_matrix(N, init_type="path", m0=5): #checked it,
         matrix = path_graph_initialization(N,m0)
     elif init_type == "random":
         matrix = np.zeros((N,N))
-        chosen =  np.random.choice(N,(m0,2),replace=True)
-        for [i,j] in chosen:
+        chosen =  random_unique_links(N,m0)
+        for (i,j) in chosen:
             matrix[i,j] +=1 
             matrix[j,i] +=1
     else:
@@ -46,25 +59,18 @@ def create_global_adjacency_matrix(N, init_type="path", m0=5): #checked it,
     
     return matrix
 
-#select heads without preference
-# def select_heads(N,m,replace=False):
-#   """
-#   selects random nodes as the head nodes (written as a seperate function for the sake of generality)
-#   """
-#   return np.random.choice(range(0,N),m, replace=replace)
 
-
-
-#select heads with preference
 def select_heads(adjacency_matrix,m,replace=False):
-    """
-    selects random nodes as the head nodes (written as a seperate function for the sake of generality)
-    """
-    N = len(adjacency_matrix)
-    probabilities = np.sum(adjacency_matrix,axis=0)
-    probabilities = probabilities/np.sum(probabilities)
-    
-    return np.random.choice(range(0,N),m, replace=replace, p=probabilities)
+  """
+  selects random nodes as the head nodes (written as a seperate function for the sake of generality)
+  """
+  N = len(adjacency_matrix)
+  if m>N:
+    rep = True
+  else:
+    rep = replace
+  return np.random.choice(np.arange(0,N),m, replace=rep)
+
 
 
 def degree_preference(i, adj_matrix, self_loop = False):

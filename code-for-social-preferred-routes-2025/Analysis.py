@@ -200,8 +200,8 @@ def compute_similarity_and_overlap(i, j, first_half_data, second_half_data, mode
     res2 = calculate_preference_measures([first_half_data[j], second_half_data[i]], mode, weighted_overlap, overlap, similarity)  # Corrected order
 
     return {
-        f"{i}_{j}": (res1["overlap_ratio"], res1["similarity_score"], res1["G1_disparity_score"]),
-        f"{j}_{i}": (res2["overlap_ratio"], res2["similarity_score"], res1["G1_disparity_score"])
+        f"{i}_{j}": (res1["overlap_ratio"], res1["similarity_score"]),
+        f"{j}_{i}": (res2["overlap_ratio"], res2["similarity_score"])
     }
 
 def parallel_similarity_overlap(first_half_data, second_half_data, mode='both',
@@ -219,7 +219,6 @@ def parallel_similarity_overlap(first_half_data, second_half_data, mode='both',
     """
     overlap_results = {}
     similarity_results = {}
-    disparity_results = {}
 
     # graph pairs for threading
     task_list = [(i, j, first_half_data, second_half_data, mode)
@@ -235,7 +234,7 @@ def parallel_similarity_overlap(first_half_data, second_half_data, mode='both',
             similarity_results[key] = similarity_res
             disparity_results[key] = disparity_res
 
-    return overlap_results, similarity_results, disparity_results
+    return overlap_results, similarity_results
 
 
 
